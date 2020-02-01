@@ -118,6 +118,6 @@ public class CommandRegistrar {
                 .executor(new ClanRoot())
                 .build();
 
-        Sponge.getCommandManager().register(instance, clansRoot, "clans", "clan");
+        Sponge.getCommandManager().register(instance, clansRoot, "clan", "clans");
     }
 }
