@@ -1,20 +1,21 @@
 package io.github.rjhaytree.simpleclans.clans;
 
 import io.github.rjhaytree.simpleclans.utility.RoleEnum;
-import org.spongepowered.api.entity.living.player.Player;
+
+import java.util.UUID;
 
 public class Member {
-    private Player player;
+    private UUID uuid;
     private RoleEnum role;
 
-    public Member(Player player, RoleEnum role) {
-        this.player = player;
+    public Member(UUID uuid, RoleEnum role) {
+        this.uuid = uuid;
         this.role = role;
     }
 
-    public Player getPlayer() { return player; }
+    public UUID getUuid() { return uuid; }
     public RoleEnum getRole() { return role; }
 
-    public void setPlayer(Player player) { this.player = player; }
+    public void setUUID(UUID uuid) { this.uuid = uuid; }
     public void setRole(RoleEnum role) { this.role = role; }
 }
