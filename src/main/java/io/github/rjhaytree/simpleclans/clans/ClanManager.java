@@ -1,16 +1,38 @@
 package io.github.rjhaytree.simpleclans.clans;
 
+import io.github.rjhaytree.simpleclans.SimpleClans;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClanManager {
-    List<Clan> loadedClans;
+    private SimpleClans instance;
+    private List<Clan> loadedClans;
 
-    public ClanManager() {
-        loadedClans = new ArrayList<Clan>();
+    public ClanManager(SimpleClans instance) {
+        this.instance = instance;
+        loadedClans = new ArrayList<>();
     }
 
-    // Player join - check if party is loaded. If not, load
+    public Boolean checkIfClaimLoaded(String name) {
+        for (int i = 0; i < loadedClans.size(); i++) {
+            if (name.equals(loadedClans.get(i).getName())) {
+                return true;
+            }
+        }
 
-    // player leave - check if other party members online. If not, unload
+        return false;
+    }
+
+    public void loadClan(Clan clan) {
+        loadedClans.add(clan);
+    }
+
+    public void unloadClan(String name) {
+        for (int i = 0; i < loadedClans.size(); i++) {
+            if (name.equals(loadedClans.get(i).getName())) {
+                loadedClans.remove(loadedClans.get(i));
+            }
+        }
+    }
 }
