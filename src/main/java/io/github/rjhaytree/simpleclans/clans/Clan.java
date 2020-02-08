@@ -11,10 +11,11 @@ public class Clan {
     private TeleportPoint waypoint;
     private UUID leader;
 
-    public Clan(String name, UUID leader) {
+    public Clan(String name, UUID leader, Member member) {
         this.name = name;
         this.leader = leader;
         this.members = new ArrayList<>();
+        members.add(member);
         this.tag = null;
         this.waypoint = null;
     }
@@ -45,6 +46,16 @@ public class Clan {
                 if (m.equals(member)) {
                     return member;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public Member getMember(UUID uuid) {
+        for (Member m: members) {
+            if (m.getUuid().equals(uuid)) {
+                return m;
             }
         }
 

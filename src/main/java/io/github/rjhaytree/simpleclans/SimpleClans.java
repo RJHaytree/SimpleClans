@@ -24,7 +24,7 @@ public class SimpleClans {
     @Inject
     private Logger logger;
 
-    private SimpleClans instance;
+    private static SimpleClans instance;
     private ClanManager clanManager;
     private Storage storage;
 
@@ -44,7 +44,7 @@ public class SimpleClans {
     }
 
     public Logger getLogger() { return logger; }
-    public SimpleClans getInstance() { return instance; }
+    public static SimpleClans getInstance() { return instance; }
     public ClanManager getClanManager() { return clanManager; }
     public Storage getStorage() { return storage; }
 }

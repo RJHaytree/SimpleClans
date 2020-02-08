@@ -15,11 +15,10 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 public class ClanCreate implements CommandExecutor {
-
     private SimpleClans instance;
 
-    public ClanCreate(SimpleClans instance) {
-        this.instance = instance;
+    public ClanCreate() {
+        instance = SimpleClans.getInstance();
     }
 
     @Override
@@ -32,19 +31,22 @@ public class ClanCreate implements CommandExecutor {
             String clanName = args.<String>getOne("name").get();
 
             // Check if claim with that name already exists
-            if (!instance.getStorage().checkIfClaimDataExists(clanName)) {
+            if (!instance.getStorage().checkIfClanDataExists(clanName)) {
+                // Check if user is already in a clan
                 if (!instance.getStorage().checkIfUserDataExists(player.getUniqueId())) {
+                    // If not, create new Member object
                     Member member = new Member(player.getUniqueId(), RoleEnum.LEADER, clanName);
+                    // Save new member to storage
                     instance.getStorage().saveMember(member);
 
-                    instance.getLogger().info("User file created for " + player.getName());
-
-                    Clan clan = new Clan(clanName, member.getUuid());
+                    // Create new Clan object
+                    Clan clan = new Clan(clanName, member.getUuid(), member);
+                    // Add clan to the loaded clans list
                     instance.getClanManager().loadClan(clan);
+                    // Save clan to storage
                     instance.getStorage().saveClan(clan);
 
-                    instance.getLogger().info("Clan created with name: " + clanName);
-
+                    // Send confirmation message
                     TextUtils.sendMessage(player, Text.builder("Clan created").color(TextColors.GREEN).build());
                 }
                 else {

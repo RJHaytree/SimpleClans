@@ -18,7 +18,7 @@ public class CommandRegistrar {
                 .permission(Permissions.CLAN_USER_CREATE)
                 .description(Text.of("Creates a new clan"))
                 .arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("name"))))
-                .executor(new ClanCreate(instance))
+                .executor(new ClanCreate())
                 .build();
 
         CommandSpec disband = CommandSpec.builder()

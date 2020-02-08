@@ -26,7 +26,7 @@ public class EventHandlers {
         }
 
         // If user exists, load file
-        member = instance.getStorage().loadUserDate(player.getUniqueId());
+        member = instance.getStorage().loadUserData(player.getUniqueId());
 
         // Check if clan is loaded already, and if not, load file
         if (!instance.getClanManager().checkIfClaimLoaded(member.getClanName())) {
@@ -35,11 +35,31 @@ public class EventHandlers {
     }
 
     @Listener
-    public void onPlayerLeave(ClientConnectionEvent.Join e) {
+    public void onPlayerLeave(ClientConnectionEvent.Disconnect e) {
         Player player = e.getTargetEntity();
 
+        // If player has no clan data loaded, do nothing
         if (!instance.getStorage().checkIfUserDataExists(player.getUniqueId())) {
+            instance.getLogger().info("Player has no data present.");
             return;
         }
+
+        // Check if the clan has any remaining players online.
+        if (instance.getClanManager().checkIfClanHasMembersOnline(player.getUniqueId())) {
+            instance.getLogger().info("Clan has players online.");
+            return;
+        }
+
+        // Get member object from the clan in question.
+        Member member = instance.getClanManager().getPlayersClan(player.getUniqueId()).getMember(player.getUniqueId());
+
+        // Save member to storage.
+        instance.getStorage().saveMember(member);
+
+        // Save clan to storage.
+        instance.getStorage().saveClan(instance.getClanManager().getPlayersClan(player.getUniqueId()));
+
+        // Finally, unload this clan.
+        instance.getClanManager().unloadClan(instance.getClanManager().getPlayersClan(player.getUniqueId()));
     }
 }

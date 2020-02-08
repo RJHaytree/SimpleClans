@@ -1,7 +1,7 @@
 package io.github.rjhaytree.simpleclans.utility;
 
 public class Permissions {
-    public static final String CLAN_USER = "simpleclans.user";
+    public static final String CLAN_USER = "simpleclans.user.base";
     public static final String CLAN_USER_CREATE = "simpleclans.user.create";
     public static final String CLAN_USER_DISBAND = "simpleclans.user.disband";
     public static final String CLAN_USER_HELP = "simpleclans.user.help";
